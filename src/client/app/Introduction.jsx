@@ -1,13 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
+import './Introduction.sass';
 
 export default class Introduction extends React.Component {
   render() {
     return (
-      <div>
-        <h2>Faster builds. Smarter automation.</h2>
-        <p>Automate your team’s software development processes, from testing through to delivery, no matter the
-          language, environment or toolchain.</p>
-        <a href="/auth/facebook" className="btn sign-up">Sign Up</a>
+      <div className="introduction">
+        <h2 className="introduction-header">Build It Now</h2>
+        <p className="introduction-content">Continuous integration could be simpler.</p>
       </div>
     );
   }
