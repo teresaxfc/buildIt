@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {ButtonToolbar} from 'react-bootstrap';
 import {DropdownButton} from 'react-bootstrap';
 import {MenuItem} from 'react-bootstrap';
+import './Header.sass';
 
 export default class Header extends React.Component {
   render() {
@@ -14,12 +15,12 @@ export default class Header extends React.Component {
       </DropdownButton>;
 
     const userLogin = () =>
-    <div>
-      <DropdownButton title="Login" id="sign-menu" pullRight={true}>
-        <MenuItem href="/auth/facebook" bsStyle='primary' id="facebook">
-          <span className="fa fa-facebook"></span> Facebook</MenuItem>
-      </DropdownButton>
-    </div>;
+      <div>
+        <DropdownButton title="Login" id="login-menu" pullRight={true}>
+          <MenuItem href="/auth/facebook" bsStyle='primary' id="facebook">
+            <span className="fa fa-facebook"></span> Facebook</MenuItem>
+        </DropdownButton>
+      </div>;
 
     return (
       <div className="container-fluid header">
