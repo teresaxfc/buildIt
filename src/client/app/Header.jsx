@@ -15,8 +15,7 @@ export default class Header extends React.Component {
 
     const userLogin = () =>
     <div>
-      <a href="/login" className="btn login">Login</a>
-      <DropdownButton title="Sign Up" id="sign-menu" pullRight={true}>
+      <DropdownButton title="Login" id="sign-menu" pullRight={true}>
         <MenuItem href="/auth/facebook" bsStyle='primary' id="facebook">
           <span className="fa fa-facebook"></span> Facebook</MenuItem>
       </DropdownButton>
