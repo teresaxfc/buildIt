@@ -1,0 +1,6 @@
+node_modules
+.idea
+.iml
+coverage
+public/js/bundle.js
+package-lock.json

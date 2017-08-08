@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script>
+      <% if (user) { %>
+        var user = <%-JSON.stringify(user)%>;
+        <% } else {%>
+        var user = null;
+        <% }%>
+    </script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+  <title>My CI</title>
+
+</head>
+<body class="body">
+<div id="app"></div>
+<script src="static/js/bundle.js" type="text/javascript"></script>
+</body>
+</html>
+
