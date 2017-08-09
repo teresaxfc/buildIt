@@ -11,7 +11,7 @@ export default class Content extends React.Component {
       </div>;
 
     const loggedUserContent = () =>
-      <Pipeline />;
+      <Pipeline user={this.props.user}/>;
 
     return (
       <div>

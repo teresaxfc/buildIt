@@ -7,8 +7,12 @@ const cookieParser = require('cookie-parser');
 const favicon = require('serve-favicon');
 const path = require('path');
 const _ = require('lodash');
+const PipelineService = require('./lib/PipelineService');
+const Logger = require('./lib/Logger');
 require('./passport')(passport);
 
+const logger = new Logger();
+const pipelineService = new PipelineService();
 const app = express();
 app.set('views', `${__dirname}/../views`);
 app.engine('ejs', ejs.renderFile);
@@ -33,6 +37,29 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
   failureRedirect: '/'
 }));
+
+app.post('/pipeline/create', (request, response) => {
+  const pipeline = request.body.pipeline;
+  const userId = _.get(request, 'user._id', null);
+
+  if (!pipeline) {
+    response.status(400).send();
+    return;
+  }
+
+  pipelineService.getOrCreatePipeline(pipeline, userId)
+    .then(pipeline => {
+      response.send({
+        pipeline:pipeline.pipeline,
+        createdTime: pipeline.createdTime,
+        user: pipeline.userId,
+      })
+    })
+    .catch((error) => {
+      logger.error('failed to save pipeline', { error, request, 'request-body': request.body });
+      response.status(500).send();
+    });
+});
 
 app.get('/', (request, response) => {
   response.render('index.ejs', {user: request.user});
