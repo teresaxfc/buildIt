@@ -8,9 +8,9 @@ class PipelineService {
     this.pipelineRepository = new PipelineRepository();
   }
 
-  getOrCreatePipeline(pipeline, userId) {
+  createPipeline(pipeline, userId) {
     return this.pipelineRepository.findOne({ pipeline, userId })
-      .then(savedPipeline => savedPipeline || this.createNewPipeline(pipeline, userId));
+      .then(savedPipeline => null || this.createNewPipeline(pipeline, userId));
   }
 
   createNewPipeline(pipeline, userId) {

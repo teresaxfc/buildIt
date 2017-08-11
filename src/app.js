@@ -16,7 +16,7 @@ const pipelineService = new PipelineService();
 const app = express();
 app.set('views', `${__dirname}/../views`);
 app.engine('ejs', ejs.renderFile);
-app.use('/static', express.static(path.join(__dirname,'../public')));
+app.use('/static', express.static(path.join(__dirname, '../public')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -47,16 +47,20 @@ app.post('/pipeline/create', (request, response) => {
     return;
   }
 
-  pipelineService.getOrCreatePipeline(pipeline, userId)
-    .then(pipeline => {
+  pipelineService.createPipeline(pipeline, userId)
+    .then(createdPipeline => {
+      if (createdPipeline === null) {
+        response.send(null);
+      }
+
       response.send({
-        pipeline:pipeline.pipeline,
-        createdTime: pipeline.createdTime,
-        user: pipeline.userId,
+        pipeline: createdPipeline.pipeline,
+        createdTime: createdPipeline.createdTime,
+        user: createdPipeline.userId,
       })
     })
     .catch((error) => {
-      logger.error('failed to save pipeline', { error, request, 'request-body': request.body });
+      logger.error('failed to save pipeline', {error, request, 'request-body': request.body});
       response.status(500).send();
     });
 });

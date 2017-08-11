@@ -11,6 +11,7 @@ export default class CreateNewPipeline extends React.Component {
       gitRepository: '',
       environmentVariables: '',
       createdPipelineName: '',
+      errorMessage: '',
     };
 
     this.updateInputValue = this.updateInputValue.bind(this);
@@ -20,11 +21,11 @@ export default class CreateNewPipeline extends React.Component {
   }
 
   updateInputValue(event) {
-    if(event.target.id === 'pipeline-name') {
+    if (event.target.id === 'pipeline-name') {
       this.setState({name: event.target.value});
-    } else if(event.target.id === 'description') {
+    } else if (event.target.id === 'description') {
       this.setState({description: event.target.value});
-    } else if(event.target.id === 'git-repository') {
+    } else if (event.target.id === 'git-repository') {
       this.setState({gitRepository: event.target.value});
     } else {
       this.setState({environmentVariables: event.target.value});
@@ -40,7 +41,12 @@ export default class CreateNewPipeline extends React.Component {
     };
 
     this.createPipelineService.createPipeline(pipeline)
-      .then(pipeline => this.setState({createdPipelineName: pipeline.name}));
+      .then(createdPipeline => {
+        if (createdPipeline === null) {
+          this.setState({errorMessage: 'failed to create new pipeline, pipeline name is already used.'});
+        }
+        this.setState({createdPipelineName: createdPipeline.name})
+      });
   }
 
   render() {
@@ -55,6 +61,7 @@ export default class CreateNewPipeline extends React.Component {
                  placeholder="Enter the name of the pipeline"
                  onChange={this.updateInputValue}
                  value={this.state.name}/>
+          <div>{this.state.errorMessage}</div>
         </div>
 
         <div className="form-group">
