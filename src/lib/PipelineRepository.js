@@ -9,9 +9,9 @@ class PipelineRepository {
     this.collection = null;
   }
 
-  findOne(pipeline) {
+  findOne(pipelineName) {
     return this.getCollection()
-      .then(collection => collection.findOne({ pipelineName: pipeline.pipelineName }));
+      .then(collection => collection.findOne({ pipelineName }));
   }
 
   save(pipeline) {

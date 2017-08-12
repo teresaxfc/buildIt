@@ -19,7 +19,7 @@ describe('PipelineRepository test', () => {
       userId,
       createdTime: new Date(),
     })
-      .then(savedPipeline => pipelineRepository.findOne(savedPipeline))
+      .then(savedPipeline => pipelineRepository.findOne(savedPipeline.pipelineName))
       .then(fetchedPipeline => expect(fetchedPipeline.pipeline).deep.equals(pipeline));
   });
 });

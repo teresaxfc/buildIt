@@ -22,13 +22,13 @@ export default class CreateNewPipeline extends React.Component {
 
   updateInputValue(event) {
     if (event.target.id === 'pipeline-name') {
-      this.setState({pipelineName: event.target.value});
+      this.setState({ pipelineName: event.target.value, errorMessage: '' });
     } else if (event.target.id === 'description') {
-      this.setState({description: event.target.value});
+      this.setState({ description: event.target.value });
     } else if (event.target.id === 'git-repository') {
-      this.setState({gitRepository: event.target.value});
+      this.setState({ gitRepository: event.target.value });
     } else {
-      this.setState({environmentVariables: event.target.value});
+      this.setState({ environmentVariables: event.target.value });
     }
   }
 
