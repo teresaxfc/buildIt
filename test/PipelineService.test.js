@@ -8,28 +8,28 @@ describe('PipelineService test', () => {
 
   it('Should return null when the pipeline name is already taken', () => {
     const pipelineToSave = {
-      name: 'test-pipeline',
+      pipelineName: 'test-pipeline',
       description: 'test-description',
       gitRepository: 'test-gitRepository',
-      environmentVariables: 'test-environmentVariables'
+      environmentVariables: 'test-environmentVariables',
     };
     const userId = 'test-userId';
 
     return pipelineService.createNewPipeline(pipelineToSave, userId)
-      .then(savedPipeline => pipelineService.createPipeline(savedPipeline.pipeline.name, userId)
+      .then(savedPipeline => pipelineService.createPipeline(savedPipeline, userId)
         .then(result => expect(result).equals(null)));
   });
 
   it('Should create a new pipeline when the pipeline name is non-existed', () => {
     const pipelineToSave = {
-      name: `non-exiting-test-pipeline${new Date()}`,
+      pipelineName: `non-exiting-test-pipeline${new Date()}`,
       description: 'non-exiting-test-description',
       gitRepository: 'non-exiting-test-gitRepository',
-      environmentVariables: 'non-exiting-test-environmentVariables'
+      environmentVariables: 'non-exiting-test-environmentVariables',
     };
     const userId = 'test-userId';
 
-    return pipelineService.createPipeline(pipelineToSave,userId)
+    return pipelineService.createNewPipeline(pipelineToSave, userId)
       .then(result => expect(result.pipeline.description).equals('non-exiting-test-description'));
   });
 });

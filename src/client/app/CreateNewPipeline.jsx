@@ -6,7 +6,7 @@ export default class CreateNewPipeline extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '',
+      pipelineName: '',
       description: '',
       gitRepository: '',
       environmentVariables: '',
@@ -22,7 +22,7 @@ export default class CreateNewPipeline extends React.Component {
 
   updateInputValue(event) {
     if (event.target.id === 'pipeline-name') {
-      this.setState({name: event.target.value});
+      this.setState({pipelineName: event.target.value});
     } else if (event.target.id === 'description') {
       this.setState({description: event.target.value});
     } else if (event.target.id === 'git-repository') {
@@ -34,7 +34,7 @@ export default class CreateNewPipeline extends React.Component {
 
   createNewPipeline() {
     const pipeline = {
-      name: this.state.name,
+      pipelineName: this.state.pipelineName,
       description: this.state.description,
       gitRepository: this.state.gitRepository,
       environmentVariables: this.state.environmentVariables
@@ -44,8 +44,9 @@ export default class CreateNewPipeline extends React.Component {
       .then(createdPipeline => {
         if (createdPipeline === null) {
           this.setState({errorMessage: 'failed to create new pipeline, pipeline name is already used.'});
+        } else {
+          this.setState({createdPipelineName: createdPipeline.pipelineName})
         }
-        this.setState({createdPipelineName: createdPipeline.name})
       });
   }
 
@@ -60,7 +61,7 @@ export default class CreateNewPipeline extends React.Component {
           <input type="text" className="form-control" id="pipeline-name"
                  placeholder="Enter the name of the pipeline"
                  onChange={this.updateInputValue}
-                 value={this.state.name}/>
+                 value={this.state.pipelineName}/>
           <div>{this.state.errorMessage}</div>
         </div>
 
@@ -88,9 +89,8 @@ export default class CreateNewPipeline extends React.Component {
                     onChange={this.updateInputValue}
                     value={this.state.environmentVariables}>&nbsp</textarea>
         </div>
-
         <button type="button" className="btn btn-primary" onClick={this.createNewPipeline}>Create pipeline</button>
-        {this.state.createdPipelineName}
+        <div>{this.state.createdPipelineName}</div>
       </form>
     );
   }

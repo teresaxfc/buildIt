@@ -11,7 +11,7 @@ class PipelineRepository {
 
   findOne(pipeline) {
     return this.getCollection()
-      .then(collection => collection.findOne(pipeline));
+      .then(collection => collection.findOne({pipelineName:pipeline.pipelineName}));
   }
 
   save(pipeline) {

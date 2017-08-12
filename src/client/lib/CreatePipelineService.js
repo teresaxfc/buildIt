@@ -8,14 +8,14 @@ export default class CreatePipelineService {
   createPipeline(pipeline) {
     return axios.post('/pipeline/create', {pipeline: pipeline, user:this.user})
       .then(response => {
-        if (response === null) {
+        if (response.data.pipeline === undefined) {
           return null;
         } else {
           return {
-            name: response.data.name,
-            description: response.data.description,
-            gitRepository: response.data.gitRepository,
-            environmentVariables: response.data.environmentVariables
+            pipelineName: response.data.pipeline.pipelineName,
+            description: response.data.pipeline.description,
+            gitRepository: response.data.pipeline.gitRepository,
+            environmentVariables: response.data.pipeline.environmentVariables
           };
         }
       });

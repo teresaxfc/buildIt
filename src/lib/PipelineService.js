@@ -9,13 +9,20 @@ class PipelineService {
   }
 
   createPipeline(pipeline, userId) {
-    return this.pipelineRepository.findOne({ pipeline, userId })
-      .then(savedPipeline => null || this.createNewPipeline(pipeline, userId));
+    const pipelineName = pipeline.pipelineName;
+    return this.pipelineRepository.findOne(pipelineName,userId)
+      .then(savedPipeline => {
+        if (savedPipeline !== null) {
+          return null;
+        }
+
+        return this.createNewPipeline(pipeline, userId)
+      });
   }
 
   createNewPipeline(pipeline, userId) {
     const id = uuid.v4();
-    return this.pipelineRepository.save({ _id: id, pipeline:pipeline, userId: userId, createdTime: new Date() });
+    return this.pipelineRepository.save({_id: id, pipelineName:pipeline.pipelineName, pipeline, userId, createdTime: new Date()});
   }
 }
 

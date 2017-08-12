@@ -51,13 +51,18 @@ app.post('/pipeline/create', (request, response) => {
     .then(createdPipeline => {
       if (createdPipeline === null) {
         response.send(null);
+      } else {
+        response.send({
+          pipeline: {
+            pipelineName: createdPipeline.pipeline.pipelineName,
+            description: createdPipeline.pipeline.description,
+            gitRepository: createdPipeline.pipeline.gitRepository,
+            environmentVariables: createdPipeline.pipeline.environmentVariables
+          },
+          createdTime: createdPipeline.createdTime,
+          user: createdPipeline.userId,
+        })
       }
-
-      response.send({
-        pipeline: createdPipeline.pipeline,
-        createdTime: createdPipeline.createdTime,
-        user: createdPipeline.userId,
-      })
     })
     .catch((error) => {
       logger.error('failed to save pipeline', {error, request, 'request-body': request.body});
