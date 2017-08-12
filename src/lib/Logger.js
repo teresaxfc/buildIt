@@ -1,8 +1,13 @@
 const bunyan = require('bunyan');
 
 const rootLogger = bunyan.createLogger({
-  name: process.env.SERVICE || 'url-shortener',
+  name: process.env.SERVICE || 'BuildIt',
   level: 'trace',
+  serializers: Object.assign({}, bunyan.stdSerializers, {
+    error: bunyan.stdSerializers.err,
+    request: bunyan.stdSerializers.req,
+    response: bunyan.stdSerializers.res,
+  }),
 });
 
 class Logger {
@@ -11,16 +16,8 @@ class Logger {
     this.logger = parentLogger.child(metadata);
   }
 
-  info(message, meta = {}) {
-    this.logger.info(meta, message);
-  }
-
   error(message, meta = {}) {
-    this.logger.fatal(meta, message);
-  }
-
-  fatal(message, meta = {}) {
-    this.logger.fatal(meta, message);
+    this.logger.error(meta, message);
   }
 }
 

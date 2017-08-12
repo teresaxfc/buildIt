@@ -4,25 +4,20 @@ const config = require('../config');
 
 const hostUrl = config.mongodbUri;
 
-class UserRepository {
+class PipelineRepository {
   constructor() {
     this.collection = null;
   }
 
-  findById(userId) {
+  findOne(pipelineName) {
     return this.getCollection()
-      .then(collection => collection.findOne({ _id: userId }));
+      .then(collection => collection.findOne({ pipelineName }));
   }
 
-  findByExternalId(oauthProvider, externalId) {
+  save(pipeline) {
     return this.getCollection()
-      .then(collection => collection.findOne({ oauthProvider, externalId }));
-  }
-
-  save(user) {
-    return this.getCollection()
-      .then(collection => collection.insertOne(user))
-      .then(() => user);
+      .then(collection => collection.insertOne(pipeline))
+      .then(() => pipeline);
   }
 
   getCollection() {
@@ -31,9 +26,9 @@ class UserRepository {
     }
 
     return mongo.connect(hostUrl, { promiseLibrary: Bluebird })
-      .then(db => db.collection('users'))
+      .then(db => db.collection('pipelines'))
       .tap(collection => this.collection === collection);
   }
 }
 
-module.exports = UserRepository;
+module.exports = PipelineRepository;
