@@ -4,29 +4,30 @@ const UserService = require('./lib/UserService');
 const User = require('./lib/User');
 const config = require('./config');
 
-module.exports = function (passport) {
+module.exports = (passport) => {
   const userService = new UserService();
 
-  passport.serializeUser(function (user, done) {
+  passport.serializeUser((user, done) => {
     done(null, user._id);
   });
 
-  passport.deserializeUser(function (id, done) {
+  passport.deserializeUser((id, done) => {
     userService.findById(id)
       .then(user => done(null, user))
-      .catch(error => done(error))
+      .catch(error => done(error));
   });
 
-  passport.use(new FacebookStrategy({
+  passport.use(new FacebookStrategy(
+    {
       clientID: config.oauth.facebook.clientID,
       clientSecret: config.oauth.facebook.clientSecret,
       callbackURL: config.oauth.facebook.callbackURL,
-      profileFields: ['id', 'email', 'first_name', 'last_name']
+      profileFields: ['id', 'email', 'first_name', 'last_name'],
     },
-    function (token, refreshToken, profile, done) {
-      process.nextTick(function () {
+    (token, refreshToken, profile, done) => {
+      process.nextTick(() => {
         const user = new User(
-          "facebook",
+          'facebook',
           profile.id,
           profile.name.givenName,
           profile.name.familyName,

@@ -11,7 +11,7 @@ class PipelineRepository {
 
   findOne(pipeline) {
     return this.getCollection()
-      .then(collection => collection.findOne({pipelineName:pipeline.pipelineName}));
+      .then(collection => collection.findOne({ pipelineName: pipeline.pipelineName }));
   }
 
   save(pipeline) {
@@ -25,9 +25,9 @@ class PipelineRepository {
       return Bluebird.resolve(this.collection);
     }
 
-    return mongo.connect(hostUrl, {promiseLibrary: Bluebird})
+    return mongo.connect(hostUrl, { promiseLibrary: Bluebird })
       .then(db => db.collection('pipelines'))
-      .tap(collection => this.collection = collection);
+      .tap(collection => this.collection === collection);
   }
 }
 
