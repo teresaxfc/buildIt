@@ -13,22 +13,21 @@ export default class Pipeline extends React.Component {
   }
 
   createNewPipeline() {
-    this.setState({displayWithNoPipeline: !this.state.displayWithNoPipeline});
+    this.setState({ displayWithNoPipeline: !this.state.displayWithNoPipeline });
   }
 
   render() {
     return (
       <div className="container">
         <div className="create-pipeline">
-          <p className={`display-pipeline ${this.state.displayWithNoPipeline}`}>
+          <p className={ `display-pipeline ${this.state.displayWithNoPipeline} no-pipelines-notice` }>
             You have no pipelines right now</p>
-          <button className={`btn display-pipeline ${this.state.displayWithNoPipeline}`}
-                  onClick={this.createNewPipeline}>Create New Pipeline
+          <button
+            className={ `btn display-pipeline ${this.state.displayWithNoPipeline}` }
+            onClick={ this.createNewPipeline }>Create New Pipeline
           </button>
         </div>
-        <div>
-          <CreateNewPipeline onStatus={!this.state.displayWithNoPipeline} user={this.props.user}/>
-        </div>
+        <CreateNewPipeline onStatus={ !this.state.displayWithNoPipeline } user={ this.props.user }/>
       </div>
     );
   }
